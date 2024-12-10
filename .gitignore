@@ -1,2 +1,3 @@
 # ignore celeba dataset
 /data/celeba
+/data/extra_images
