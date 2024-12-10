@@ -7,6 +7,7 @@ import pandas as pd
 from torchvision import transforms
 from PIL import Image
 import os
+from sklearn.metrics.pairwise import cosine_similarity
 
 workers = 0 if os.name == 'nt' else 4
 device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
@@ -100,3 +101,12 @@ average_df = df.groupby('identity')['embedding'].agg(average_embeddings)
 #create distribution chart
 dists = [[torch.tensor(e1 - e2).norm().item() for e2 in average_df] for e1 in average_df]
 print(pd.DataFrame(dists, columns=average_df.index.to_list(), index=average_df.index.to_list()))
+
+#compute top 3 similarities
+def get_top_similarities(target_embedding, average_df):
+    embeddings_matrix = np.vstack(average_df.values)
+    similarities = cosine_similarity(target_embedding.reshape(1, -1), embeddings_matrix)[0]
+    top_indeces = similarities.argsort()[-3:][::-1]
+    top_3 = [(average_df.index[i], similarities[i]) for i in top_indeces]
+    return top_3
+
