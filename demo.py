@@ -70,9 +70,17 @@ def display_similar_faces(faces, top_3_similar_faces, top_3_similar_faces_dists,
         fig, axes = plt.subplots(1, 4, figsize=(16, 6))
         
         # show original face
-        axes[0].imshow(Image.open(f'data/demo_images/{face}/1.jpg'))  #make sure to rename a file within input image folder as 1.jpg
-        axes[0].set_title(f"Original: {face}")
-        axes[0].axis('off')
+        input_folder_path = os.path.join("data/demo_images", face)
+        input_img_path = os.path.join(input_folder_path, os.listdir(input_folder_path)[0])
+        print(input_img_path)
+        input_img = Image.open(input_img_path)
+
+        if os.path.exists(input_img_path):
+            axes[0].imshow(input_img) 
+            axes[0].set_title(f"Original: {face}")
+            axes[0].axis('off')
+        else:
+            print(f"image not found: {input_img_path}")
         
         # show top 3 similar celeb images
         for j, celeb in enumerate(top_3_similar_faces[i]):
