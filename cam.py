@@ -11,7 +11,7 @@ def process_image(image):
     return gray, edges, blurred
 
 # Create a directory to store the frames
-output_dir = "captured_frames"
+output_dir = "data/captured_frames"
 os.makedirs(output_dir, exist_ok=True)
 
 # Video capture from the default camera
@@ -35,6 +35,7 @@ while True:
 
     if key == ord('s'):  # Save and process the frame when 's' is pressed
         # Save the captured frame
+
         frame_filename = os.path.join(output_dir, "captured_image.jpg")
         cv2.imwrite(frame_filename, frame)
         print(f"Frame saved as {frame_filename}")
