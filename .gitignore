@@ -1,3 +1,4 @@
 # ignore celeba dataset
 /data/celeba
 /data/extra_images
+/data/embedding_images
